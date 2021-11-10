@@ -6,8 +6,6 @@ const app = express();
 const port = 3000;
 
 app.get("/", (req, res) => {
-	res.send("This is the root of the website");
-
 	const baseWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
 	const cityName = 'London';
 	const fullWeatherUrl = `${baseWeatherUrl}?q=${cityName}&appid=${weatherApiKey}`;
@@ -18,7 +16,8 @@ app.get("/", (req, res) => {
 		weatherResponse.on('data', (weatherData) => {
 			const parsedData = JSON.parse(weatherData);
 			console.log(parsedData);
-		})
+			res.send(`<h1>Current temperate in London: ${parsedData.main.temp-273.15}°C</h1>`)
+		});
 	})
 })
 
